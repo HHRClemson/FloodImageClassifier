@@ -29,16 +29,11 @@ for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
 
 def download_images():
-    base_url = 'C:/Users/jpall/OneDrive/Desktop/8050/flood_images'
-    #base_url = 'https://drive.google.com/drive/folders/1bJ4DYMMPCgliwdNhU-1dDKQ9_7Wp565l?usp=sharing'
-    #base_url = 'https://raw.githubusercontent.com/tensorflow/models/master/research/object_detection/test_images/'
+    base_url = './Images'
     filenames = ['flood_75.jpg', 'flood_580.jpg', 'flood_536.jpg', 'flood_66.jpg','flood_162.jpg','flood_181.jpg', 'flood_172.jpg']
     image_paths = []
     for filename in filenames:
         print("at\n")
-        #image_path = tf.keras.utils.get_file(fname=filename,
-                                            #origin=base_url + filename,
-                                            #untar=False)
         image_path = pathlib.Path(os.path.join(base_url, filename))
         image_paths.append(str(image_path))
     return image_paths
@@ -78,16 +73,12 @@ def load_image_into_numpy_array(path):
     """
     im =Image.open(path)
     (im_width, im_height) = im.size
-    #print(im_width)
-    #return np.array(im.getdata()).reshape((im_height, im_width, 3)).astype(np.uint8)
     return np.array(Image.open(path)),im_width,im_height
 
 for image_path in IMAGE_PATHS:
 
     print('Running inference for {}... '.format(image_path), end='')
     img_path = Path(image_path)
-    #print(img_path.exists())
-    #print(os.path.basename(img_path).split(".")[0])
     image_name = os.path.basename(img_path).split(".")[0]
     image_np,image_np_width,image_np_height = load_image_into_numpy_array(image_path)
 
@@ -132,9 +123,6 @@ for image_path in IMAGE_PATHS:
           min_score_thresh=.30,
           agnostic_mode=False)
     
-    #print(detections['detection_boxes'])
-    #print(detections['detection_anchor_indices'])
-    #print(detections['detection_classes'])
     # This is the way I'm getting my coordinates
     boxes = detections['detection_boxes']
     # get all boxes from an array
@@ -158,7 +146,6 @@ for image_path in IMAGE_PATHS:
             cv2.imwrite("C:/Users/jpall/OneDrive/Desktop/8050/models/training_demo/crops/box{}_{}.jpg".format(image_name,class_name),arr)
     plt.figure()
     plt.imshow(image_np_with_detections)
-    #plt.imsave(image_name, image_np_with_detections)
     plt.figure(figsize=(90,75))
     plt.show()
     print('Done')
