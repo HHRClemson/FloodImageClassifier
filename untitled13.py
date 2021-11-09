@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Mar  8 13:21:12 2021
-
-@author: jpall
-"""
-
 import numpy as np
 import os
 import tensorflow as tf
@@ -28,10 +21,8 @@ for gpu in gpus:
     tf.config.experimental.set_memory_growth(gpu, True)
 
 def download_images():
-    base_url = 'C:/Users/jpall/OneDrive/Desktop/8050/flood_images'
-    #base_url = 'https://drive.google.com/drive/folders/1bJ4DYMMPCgliwdNhU-1dDKQ9_7Wp565l?usp=sharing'
-    #base_url = 'https://raw.githubusercontent.com/tensorflow/models/master/research/object_detection/test_images/'
-    filenames = ['flood_75.jpg', 'flood_580.jpg','flood_536.jpg', 'flood_66.jpg','flood_162.jpg','flood_181.jpg', 'flood_172.jpg']
+    base_url = './Images/flood_images'
+    filenames = ['flood_75.jpg', 'flood_580.jpg','flood_536.jpg','flood_162.jpg','flood_181.jpg', 'flood_172.jpg']
     image_paths = []
     for filename in filenames:
         print("at\n")
@@ -46,8 +37,8 @@ IMAGE_PATHS = download_images()
 print(IMAGE_PATHS)
 
 
-PATH_TO_SAVED_MODEL = "C:/Users/jpall/OneDrive/Desktop/8050/models/training_demo/inference_graph/saved_model"
-PATH_TO_LABELS = "C:/Users/jpall/OneDrive/Desktop/8050/models/training_demo/training/labelmap.pbtxt"
+PATH_TO_SAVED_MODEL = "./inference_graph/saved_model"
+PATH_TO_LABELS = "./inference_graph/labelmap.pbtxt"
 
 print('Loading model...', end='')
 start_time = time.time()
