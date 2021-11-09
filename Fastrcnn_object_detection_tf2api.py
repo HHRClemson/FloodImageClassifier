@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Mar  1 13:57:26 2021
-
-@author: jpall
-"""
-
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'    # Suppress TensorFlow logging (1)
 import pathlib
@@ -39,13 +32,12 @@ def download_images():
     return image_paths
 
 IMAGE_PATHS = download_images()
-IMAGE_PATHS.append('C:\\Users\\jpall\\.keras\\datasets\\flood_270.jpeg')
-IMAGE_PATHS.append('C:\\Users\\jpall\\.keras\\datasets\\flood_66.jpg')
-IMAGE_PATHS.append('C:\\Users\\jpall\\.keras\\datasets\\flood_162.jpg')
-IMAGE_PATHS.append('C:\\Users\\jpall\\.keras\\datasets\\flood_172.jpg')
-IMAGE_PATHS.append('C:\\Users\\jpall\\.keras\\datasets\\flood_181.jpg')
-IMAGE_PATHS.append('C:\\Users\\jpall\\.keras\\datasets\\flood_536.jpg')
-IMAGE_PATHS.append('C:\\Users\\jpall\\.keras\\datasets\\flood_580.jpg')
+IMAGE_PATHS.append('.\\flood_75.jpg')
+IMAGE_PATHS.append('.\\flood_162.jpg')
+IMAGE_PATHS.append('.\\flood_172.jpg')
+IMAGE_PATHS.append('.\\flood_181.jpg')
+IMAGE_PATHS.append('.\\flood_536.jpg')
+IMAGE_PATHS.append('.\\flood_580.jpg')
 print(IMAGE_PATHS)
 
 
@@ -77,7 +69,7 @@ LABEL_FILENAME = 'mscoco_label_map.pbtxt'
 PATH_TO_LABELS = download_labels(LABEL_FILENAME)
 print(PATH_TO_LABELS)
 
-PATH_TO_SAVED_MODEL = 'C:/Users/jpall/.keras/datasets/faster_rcnn_resnet50_v1_640x640_coco17_tpu-8' + "/saved_model"
+PATH_TO_SAVED_MODEL = './faster_rcnn_resnet50_v1_640x640_coco17_tpu-8' + "/saved_model"
 
 print('Loading model...', end='')
 start_time = time.time()

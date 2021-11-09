@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Mar  8 02:16:22 2021
-
-@author: jpall
-"""
-
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'    # Suppress TensorFlow logging (1)
 import pathlib
@@ -42,8 +35,8 @@ IMAGE_PATHS = download_images()
 print(IMAGE_PATHS)
 
 
-PATH_TO_SAVED_MODEL = "C:/Users/jpall/tensorflow/workspace/training_demo/exported-models/my_model_2/saved_model"
-PATH_TO_LABELS = "C:/Users/jpall/tensorflow/workspace/training_demo/annotations/label_map.pbtxt"
+PATH_TO_SAVED_MODEL = "./my_model_2/saved_model"
+PATH_TO_LABELS = "./label_map.pbtxt"
 
 print('Loading model...', end='')
 start_time = time.time()
@@ -143,7 +136,7 @@ for image_path in IMAGE_PATHS:
             x_down = int(xmax*image_np_width)
             y_down = int(ymax*image_np_height)
             arr = image_np[y_up:y_down,x_up:x_down]
-            cv2.imwrite("C:/Users/jpall/OneDrive/Desktop/8050/models/training_demo/crops/box{}_{}.jpg".format(image_name,class_name),arr)
+            cv2.imwrite("./crops/box{}_{}.jpg".format(image_name,class_name),arr)
     plt.figure()
     plt.imshow(image_np_with_detections)
     plt.figure(figsize=(90,75))
