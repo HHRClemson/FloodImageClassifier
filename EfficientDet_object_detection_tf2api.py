@@ -1,34 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@Rakshit-Pally26 
-HHRClemson
-/
-FloodImageClassifier
-Public
-2
-01
-Code
-Issues
-1
-Pull requests
-Discussions
-Actions
-Projects
-Security
-Insights
-FloodImageClassifier/Fastrcnn_object_detection_tf2api.py /
-@Rakshit-Pally26
-Rakshit-Pally26 Update Fastrcnn_object_detection_tf2api.py
-Latest commit dc62b77 1 hour ago
- History
- 1 contributor
-142 lines (115 sloc)  5.2 KB
-   
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'    # Suppress TensorFlow logging (1)
 import pathlib
@@ -168,16 +137,3 @@ for image_path in IMAGE_PATHS:
     plt.figure(figsize=(90,75))
     plt.show()
 plt.show()
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Loading complete
