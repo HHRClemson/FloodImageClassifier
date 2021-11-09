@@ -6,12 +6,11 @@ import skimage.viewer
 import imutils
 
 BLUE = (255,0,0)
-#Image Path
 original_img = ("./Images/flood_181.jpg")
 
 def find_skyline(x1, y1, x2, y2, img):
-    k = 1.0 * (y2 - y1) / (x2 - x1)
-    d = 1.0 * (y1*x2 - y2*x1) / (x2 - x1)
+    k = 1.0 * (y2 - y1) / 1.0 * (x2 - x1)
+    d = 1.0 * (y1*x2 - y2*x1) / 1.0 * (x2 - x1)
     return(k,d)
 def vignette_filter(img, pixels_falloff = 0, types = 0):
     height, width = img.shape
@@ -64,8 +63,10 @@ def affline_rotate(img, pts1, pts2):
 
 if __name__ == "__main__":
     img = cv2.imread(original_img, 0)
+    img = cv2.resize(img, (416,416))
     viewer = skimage.viewer.ImageViewer(image=img)
     viewer.show()
+    
     img2 = vignette_filter(img, 0.3)
     viewer = skimage.viewer.ImageViewer(image=img2)
     viewer.show()
@@ -79,7 +80,7 @@ if __name__ == "__main__":
     img = cv2.blur(img, (15,15))
     clahe = cv2.createCLAHE(clipLimit = 2.00, tileGridSize = (11,11))
     img = clahe.apply(img)
-    ret2, detected_edges = cv2.threshold(img, 10, 230, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+    ret2, detected_edges = cv2.threshold(img, 9, 255, cv2.THRESH_BINARY+cv2.THRESH_OTSU)
     #cv2.imshow('de', detected_edges)
     
     edges = cv2.Canny(detected_edges, 0.2, 1.8, apertureSize = 3)
@@ -107,10 +108,11 @@ if __name__ == "__main__":
             pos = int(k * j + d)
             if i <= pos + 4:
                 dst[i, j] = 0
-    viewer = skimage.viewer.ImageViewer(image=dst)
-    viewer.show()
+    #viewer = skimage.viewer.ImageViewer(image=dst)
+    #viewer.show()
     
     original = cv2.imread(original_img)
+    original = cv2.resize(original, (416,416))
     for row in range(original.shape[0]):
         for bt in range(original.shape[1]):
             if dst[row, bt] == 0:
@@ -128,15 +130,17 @@ if __name__ == "__main__":
     pts2 = np.float32([[img.shape[1] * 0.9, 0], [0, img.shape[0] / 7], [img.shape[1] * 0.75, img.shape[0]]])
 
     img = cv2.imread(original_img, 0)
-    img = affline_rotate(img,pts1, pts2)
-    detected_edges = affline_rotate(detected_edges, pts1, pts2)
-    result = affline_rotate(original, pts1,pts2)
+    img2 = cv2.imread(original_img)
+    img = cv2.resize(img, (416,416))
+    #img = affline_rotate(img,pts1, pts2)
+    #detected_edges = affline_rotate(detected_edges, pts1, pts2)
+    #result = affline_rotate(original, pts1,pts2)
     viewer = skimage.viewer.ImageViewer(image=img)
     viewer.show()
     viewer = skimage.viewer.ImageViewer(image=detected_edges)
     viewer.show()
-    viewer = skimage.viewer.ImageViewer(image=result)
-    viewer.show()
+    #viewer = skimage.viewer.ImageViewer(image=result)
+    #viewer.show()
 
             
     contours = cv2.findContours(detected_edges.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
@@ -148,26 +152,57 @@ if __name__ == "__main__":
     
     areas = [cv2.contourArea(contour) for contour in contours]
     (contours, areas) = zip(*sorted(zip(contours, areas), key=lambda a:a[1]))
-    print(areas[-1])
+    print("Masked region area is :" + str(areas[-1]))
+    image_area = img.shape[0] * img.shape[1]
+    print("Total image area" + str(image_area))
+    area_ratio = (areas[-1] / image_area) * 100
+    print("Th percentage of the image occupied by the masked portion is : " + str(area_ratio))
     # print contour with largest area
     bottle_clone = img.copy()
     cv2.drawContours(bottle_clone, [contours[-1]], -1, (255, 0, 0), 2)
-    cv2.drawContours(bottle_clone, [contours[-2]], -1, (255, 0, 0), 2)
     (x, y, w, h) = cv2.boundingRect(contours[-1])
-    cv2.putText(bottle_clone, "Area : " + str(areas[-1]), (x + 45 , y + 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)
+    cv2.putText(bottle_clone, "Area : " + str(areas[-1]), (x + 45 , y + 360), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 2)
     viewer = skimage.viewer.ImageViewer(image=bottle_clone)
     viewer.show()
     
     bottle_clone = img.copy()
+    bottle_clone_1 = img2.copy()
     (x, y, w, h) = cv2.boundingRect(contours[-1])
     aspectRatio = w / float(h)
     print(aspectRatio)
-    if aspectRatio < 0.4:
+    if aspectRatio >= 1.8:
         cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
-        cv2.putText(bottle_clone, "Full", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 255, 0), 2)
+        cv2.putText(bottle_clone, "level 1", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 2)
+    elif ((aspectRatio >= 1.62) and (aspectRatio < 1.8)):
+        cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(bottle_clone, "level 2", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 2)
+    elif ((aspectRatio >= 1.44) and (aspectRatio < 1.62)):
+        cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(bottle_clone, "level 3", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 2)
+    elif ((aspectRatio >= 1.26) and (aspectRatio < 1.44)):
+        cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(bottle_clone, "level 4", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 2)
+    elif ((aspectRatio >= 1.08) and (aspectRatio < 1.26)):
+        cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(bottle_clone, "level 5", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 2)
+    elif ((aspectRatio >= 0.90) and (aspectRatio < 1.08)):
+        cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(bottle_clone, "level 6", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 2)
+    elif ((aspectRatio >= 0.72) and (aspectRatio < 0.90)):
+        cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(bottle_clone, "level 7", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 2)
+    elif ((aspectRatio >= 0.54) and (aspectRatio < 0.72)):
+        cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(bottle_clone, "level 3", (x + 45, y + 360), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 2)
+    elif ((aspectRatio >= 0.36) and (aspectRatio < 0.54)):
+        cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(bottle_clone, "level 9", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 2)
+    elif ((aspectRatio >= 0.18) and (aspectRatio < 0.36)):
+        cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 255, 0), 2)
+        cv2.putText(bottle_clone, "level 10", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 3, (255, 255, 0), 2)
     else:
         cv2.rectangle(bottle_clone, (x, y), (x + w, y + h), (0, 0, 255), 2)
-        cv2.putText(bottle_clone, "Low", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 2, (0, 0, 255), 2)
-    viewer = skimage.viewer.ImageViewer(image=bottle_clone)
+        cv2.putText(bottle_clone, "Low", (x + 45, y + 60), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 255), 2)
+    image=cv2.cvtColor(bottle_clone,cv2.COLOR_GRAY2RGB)
+    viewer = skimage.viewer.ImageViewer(image=image)
     viewer.show()
-        
