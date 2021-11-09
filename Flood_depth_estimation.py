@@ -1,10 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Mar 30 19:30:37 2021
-
-@author: jpall
-"""
-
 import cv2
 import numpy as np
 import math
@@ -13,7 +6,8 @@ import skimage.viewer
 import imutils
 
 BLUE = (255,0,0)
-original_img = ("C:/Users/jpall/OneDrive/Desktop/flood/flood_181.jpg")
+#Image Path
+original_img = ("./Images/flood_181.jpg")
 
 def find_skyline(x1, y1, x2, y2, img):
     k = 1.0 * (y2 - y1) / (x2 - x1)
