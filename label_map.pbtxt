@@ -1,0 +1,32 @@
+item { 
+	name:'car'
+	id:1
+}
+item { 
+	name:'House'
+	id:2
+}
+item { 
+	name:'Truck'
+	id:3
+}
+item { 
+	name:'traffic sign'
+	id:4
+}
+item { 
+	name:'tree'
+	id:5
+}
+item { 
+	name:'person'
+	id:6
+}
+item { 
+	name:'Bridge'
+	id:7
+}
+item { 
+	name:'Boat'
+	id:8
+}
