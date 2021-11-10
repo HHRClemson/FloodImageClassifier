@@ -13,7 +13,7 @@
 FloodImageClassifier: A Python tool for Flood Image Classification and Semantic Segmentation
 
 ## Getting Started
-FloodImageClassifie.py is a python package developed using python 3.9. The package is tested using >9000 image data colected from the USGS, 511 traffic images (DOT) and social media platforms. The user can specifically target any flood iage and use any of these pre-trained models to estimate the inundation area and flood depth severity. 
+FloodImageClassifie.py is a python package developed using python 3.9. The package is tested using >9000 image data collected from the USGS, 511 traffic images (DOT) and social media platforms. The user can specifically target any flood iage and use any of these pre-trained models to estimate the inundation area and flood depth severity. 
 
 ### Prerequisites 
 
