@@ -40,5 +40,5 @@ The package dependencies are:
 
 ## Acknowledgments
 
-* This work is supported by the U.S. National Science Foundation (NSF) Directorate for Engineering under grant CBET 1901646. Any opinions, findings, and discussions expressed in this study are those of the authors and do not necessarily reflect the views of the NSF. 
+* This work is supported by the U.S. National Science Foundation (NSF) Directorate for Engineering under grant # CBET 1901646. Any opinions, findings, and discussions expressed in this study are those of the authors and do not necessarily reflect the views of the NSF. 
 
