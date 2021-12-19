@@ -1,6 +1,3 @@
-
-
-
 # ImageProcessing
 - Untitled11.py : This script is for inference detection using custom trained Fast RCNN, EfficientDet, and SSDMobilenet models.
 
@@ -12,7 +9,7 @@
 
 - untitled17.py : This script is for detecting the edges of the water surface using canny edge detection algorithm and then it determines the depth of the water using the aspect ratio concept. 
 
-**If you find our Environmental Modelling & Software paper or code useful, we encourage you to cite the paper. BibTeX:**
+**If you find our Environmental Modelling & Software paper or code useful, we encourage you to cite our paper. BibTeX:**
 
 `@article{PALLY2021105285,
 title = {Application of image processing and convolutional neural networks for flood image classification and semantic segmentation},
@@ -27,7 +24,7 @@ url = {https://www.sciencedirect.com/science/article/pii/S1364815221003273},auth
 FloodImageClassifier: A Python tool for Flood Image Classification and Semantic Segmentation
 
 ## Getting Started
-FloodImageClassifie.py is a python package developed using python 3.9. The package is tested using >9000 image data collected from the USGS, 511 traffic images (DOT) and social media platforms. The user can specifically target any flood image and use any of these pre-trained models to estimate the inundation area and flood depth severity. 
+FloodImageClassifie.py is a python package developed using python 3.9. The package is tested using >9000 image data collected from the USGS, 511 traffic images (DOT) and social media platforms. The package includes various CNNs architectures such as YOLOv3 (You look only once version 3), Fast R-CNN (Region-based CNN), Mask R-CNN, SSD MobileNet (Single Shot MultiBox Detector  MobileNet), and EfficientDet (Efficient Object Detection) to perform both object detection and segmentation simultaneously. Canny edge detection and aspect ratio concepts are also included in the package for flood water level estimation and classification. The pipeline is smartly designed to train a large number of images and calculate flood water levels and inundation areas which can be used to identify flood depth, severity, and risk. Users can specifically target any flood image and use any of these pre-trained models to estimate the inundation area and flood depth severity. 
 
 ### Prerequisites 
 
