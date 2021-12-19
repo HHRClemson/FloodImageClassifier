@@ -1,3 +1,6 @@
+
+
+
 # ImageProcessing
 - Untitled11.py : This script is for inference detection using custom trained Fast RCNN, EfficientDet, and SSDMobilenet models.
 
@@ -8,6 +11,17 @@
 - YoloV3.ipynb : This python notebook is for running inference using a YoloV3 model which makes use of COCO pre-trained weights.  
 
 - untitled17.py : This script is for detecting the edges of the water surface using canny edge detection algorithm and then it determines the depth of the water using the aspect ratio concept. 
+
+**If you find our Environmental Modelling & Software paper or code useful, we encourage you to cite the paper. BibTeX:**
+
+`@article{PALLY2021105285,
+title = {Application of image processing and convolutional neural networks for flood image classification and semantic segmentation},
+journal = {Environmental Modelling & Software},
+pages = {105285},
+year = {2021},
+issn = {1364-8152},
+doi = {https://doi.org/10.1016/j.envsoft.2021.105285},
+url = {https://www.sciencedirect.com/science/article/pii/S1364815221003273},author = {R.J. Pally and S. Samadi}`
 
 # Project Title
 FloodImageClassifier: A Python tool for Flood Image Classification and Semantic Segmentation
